@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # angular-dashboard
 Angular Dashboard Demo
 
@@ -27,3 +28,7 @@ $ grunt serve
 Acceder a [http://localhost:9000/#/](http://localhost:9000/#/)
 
 Importante: Es necesario haber descargado el repo [angular-mock-rest](https://github.com/cortezcristian/angular-mock-rest) para poder transacionar con [http://localhost:9001/](http://localhost:9001/proveedores)
+=======
+# AngularCantoia
+trabajo final para el curso de Angular
+>>>>>>> de52f65ebd7b694b7bc242e02cfefc87ba4a7c7b
