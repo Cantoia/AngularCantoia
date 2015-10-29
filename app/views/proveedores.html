@@ -17,38 +17,29 @@
         <div class="col-md-12">
 
           <!-- insert form starts -->
-          <h3>Cargar</h3>
+          <span>{{fecha | date:'EEEE, MMMM d, y, h:mm:ss a'}}</span>
+        </br>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Cargar</button>
+          <button class="btn btn-primary" ng-click="confirmarBorrarProveedor()" data-toggle="modal" data-target="#myModal">Eliminar</button>
+            <!-- ui grilla, faltan botones -->
+           <div ui-grid="gridOp" ui-grid-selection class="myGrid"></div>
 
-          <form name="nuevoprov" ng-submit="cargarProveedores(nuevoprov)" novalidate>
-
-              <div class="form-group" ng-class="{'has-error': nuevoprov.nombre.$invalid && nuevoprov.$dirty }">
-              <input type="text" name="nombre" ng-model="s" class="form-control" placeholder="Nombre..."  minlength="3" required />
-              <div class="validation text-danger"
-                     ng-messages="nuevoprov.nombre.$error"
-                     ng-if="nuevoprov.nombre.$touched || nuevoprov.$submitted">
-                    <div ng-message="required" ng-show="nuevoprov.nombre.$error.required">Este campo es requerido</div>
-                    <div ng-message="minlength" ng-show="nuevoprov.nombre.$error.minlength">El nombre debe tener al menos 3 caracteres</div>
-
-              </div>
-              </div>
-
-              <button class="btn btn-primary" type="submit" ng-disabled="nuevoprov.$invalid">Cargar</button>
-          </form>
-          <pre class="hide">{{nuevoprov.nombre | json}}</pre>
-          <!-- insert form ends -->
-
-          <!-- list starts -->
+          <!-- tabla ng-repeat completa
           <table class="table">
               <tr>
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
+                  <th>Email</th>
+                  <th>Direccion</th>
                   <th>Opciones</th>
               </tr>
               <tr ng-repeat="p in proveedores | filter: buscar">
                   <td>{{p.id}}</td>
                   <td>{{p.nombre}}</td>
                   <td>{{p.apellido}}</td>
+                  <td>{{p.email}}</td>
+                  <td>{{p.dir}}</td>
                   <td>
                       Editar |
                       <button ng-click="confirmarBorrarProveedor(p.id)" data-toggle="modal" data-target="#myModal">
@@ -58,7 +49,7 @@
                   </td>
               </tr>
           </table>
-          <!-- list ends -->
+          list ends -->
 
         </div>
       </div>
@@ -70,7 +61,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Modal ELiminar -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -83,10 +74,70 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" ng-click="borrarProveedor(idProveedorBorrar)">Borrar</button>
+        <button type="button" class="btn btn-primary" ng-click="borrarProveedor({{idProveedorBorrar}})">Borrar</button>
       </div>
     </div>
   </div>
 </div>
 
 
+<!-- Modal Agregar -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Agregar Proveedor</h4>
+      </div>
+      <div class="modal-body">
+        <form name="nuevoprov" ng-submit="cargarProveedores(nuevoprov)" novalidate>
+              <!-- Input nombre -->
+              <div class="form-group" ng-class="{'has-error': nuevoprov.nombre.$invalid && nuevoprov.$dirty }">
+              <input type="text" name="nombre" ng-model="s" class="form-control" placeholder="Nombre..."  minlength="3" required />
+                <div class="validation text-danger"
+                       ng-messages="nuevoprov.nombre.$error"
+                       ng-if="nuevoprov.nombre.$touched || nuevoprov.$submitted">
+                      <div ng-message="required" ng-show="nuevoprov.nombre.$error.required">Este campo es requerido</div>
+                      <div ng-message="minlength" ng-show="nuevoprov.nombre.$error.minlength">El nombre debe tener al menos 3 caracteres</div>
+
+                </div>
+              </div>
+              <!-- Input apellido -->
+              <div class="form-group" ng-class="{'has-error': nuevoprov.apellido.$invalid && nuevoprov.$dirty }">
+              <input type="text" name="apellido" ng-model="a" class="form-control" placeholder="Apellido..."  minlength="3" required />
+                <div class="validation text-danger"
+                       ng-messages="nuevoprov.apellido.$error"
+                       ng-if="nuevoprov.apellido.$touched || nuevoprov.$submitted">
+                      <div ng-message="required" ng-show="nuevoprov.apellido.$error.required">Este campo es requerido</div>
+                      <div ng-message="minlength" ng-show="nuevoprov.apellido.$error.minlength">El apellido debe tener al menos 3 caracteres</div>
+
+                </div>
+              </div>
+              <!-- Input mail -->
+              <div class="form-group" ng-class="{'has-error': nuevoprov.mail.$invalid && nuevoprov.$dirty }">
+              <input type="email" name="mail" ng-model="m" class="form-control" placeholder="Mail..." required />
+                <div class="validation text-danger"
+                       ng-messages="nuevoprov.mail.$error"
+                       ng-if="nuevoprov.mail.$touched || nuevoprov.$submitted">
+                      <div ng-message="required" ng-show="nuevoprov.mail.$error.required">Este campo es requerido</div>
+                </div>
+              </div>
+              <!-- Input dir -->
+              <div class="form-group" ng-class="{'has-error': nuevoprov.dir.$invalid && nuevoprov.$dirty }">
+              <input type="text" name="dir" ng-model="d" class="form-control" placeholder="Direccion..." minlength="5" maxlength="30" required />
+                <div class="validation text-danger"
+                       ng-messages="nuevoprov.dir.$error"
+                       ng-if="nuevoprov.dir.$touched || nuevoprov.$submitted">
+                      <div ng-message="required" ng-show="nuevoprov.dir.$error.required">Este campo es requerido</div>
+                      <div ng-message="minlength" ng-show="nuevoprov.dir.$error.minlength">La direccion debe tener al menos 5 caracteres</div>
+                      <div ng-message="maxlength" ng-show="nuevoprov.dir.$error.minlength">La direccion debe tener como maximo 30 caracteres</div>
+                </div>
+              </div>
+
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary" ng-disabled="nuevoprov.$invalid">Agregar</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>

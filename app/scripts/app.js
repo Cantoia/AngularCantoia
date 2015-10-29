@@ -15,7 +15,11 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'toaster',
+    'ui.grid',
+    'ui.grid.selection',
+    'cfp.hotkeys'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -44,7 +48,7 @@ angular
       $rootScope.layout = {};
       $rootScope.layout.loading = true;
       $rootScope.config = {};
-      $rootScope.config.service_url = 'http://localhost:9001';
+      $rootScope.config.service_url = 'http://localhost:9001/';
       $rootScope.config.base_url = '';
       $rootScope.config.base_url += $location.protocol()+'://';
       $rootScope.config.base_url += $location.host();
@@ -57,7 +61,7 @@ angular
           console.log('$routeChangeStart');
           //show loading gif
           $timeout(function(){
-            $rootScope.layout.loading = true;
+            $rootScope.layout.loading = false;
           });
       });
       $rootScope.$on('$routeChangeSuccess', function () {
